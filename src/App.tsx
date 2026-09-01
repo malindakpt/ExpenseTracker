@@ -2,7 +2,7 @@ function App() {
 
   return (
     <> 
-    App
+    <h1>Expense Tracker</h1>
     </>
   )
 }
