@@ -5,8 +5,7 @@ export const EXPENSE_CATEGORIES = [
   'utilities',
   'health',
   'entertainment',
-  'other',
-// Fixed
+  'other'
 ] as const;
 
 export type ExpenseCategory = (typeof EXPENSE_CATEGORIES)[number];
@@ -24,5 +23,4 @@ export type Expense = {
 
 export type CreateExpenseRequest = Omit<Expense, "id" | "createdAt" |"updatedAt">;
 
-// Fixed
 export type UpdateExpenseRequest = {id : string} & Partial<Omit<Expense, "id" | "createdAt" |"updatedAt">>;

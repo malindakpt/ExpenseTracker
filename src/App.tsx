@@ -1,24 +1,7 @@
-import { useGetExpensesQuery } from './features/expenses/api/expensesApi';
+import { ExpenseListPage } from './features/expenses/pages/ExpenseListPage';
 
 function App() {
-  const { data, isLoading, error } = useGetExpensesQuery({
-    page: 1,
-    limit: 1,
-  });
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Failed to load expenses</div>;
-  }
-
-  return (
-    <pre>
-      {JSON.stringify(data, null, 2)}
-    </pre>
-  );
+  return <ExpenseListPage />;
 }
 
 export default App;
