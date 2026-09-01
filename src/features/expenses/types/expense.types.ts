@@ -23,4 +23,4 @@ export type Expense = {
 
 export type CreateExpenseRequest = Omit<Expense, "id" | "createdAt" |"updatedAt">;
 
-export type UpdateExpenseRequest = Omit<Expense, "createdAt" |"updatedAt">;
+export type UpdateExpenseRequest = {id : string} & Partial<Omit<Expense, "createdAt" |"updatedAt">>;
