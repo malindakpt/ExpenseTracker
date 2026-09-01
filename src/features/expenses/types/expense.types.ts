@@ -10,7 +10,7 @@ export const EXPENSE_CATEGORIES = [
 
 export type ExpenseCategory = typeof EXPENSE_CATEGORIES;
 
-export interface Expense {
+export type Expense = {
   id: string;
   title: string;
   amount: number;
@@ -21,3 +21,6 @@ export interface Expense {
   updatedAt: string;
 }
 
+export type CreateExpenseRequest = Omit<Expense, "id" | "createdAt" |"updatedAt">;
+
+export type UpdateExpenseRequest = Omit<Expense, "createdAt" |"updatedAt">;
