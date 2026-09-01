@@ -48,3 +48,10 @@ import type { CreateExpenseRequest, Expense, UpdateExpenseRequest } from '../typ
 
     tagTypes: ['Expense'],
  });
+
+export const {
+  useGetExpensesQuery,
+  useCreateExpenseMutation,
+  useUpdateExpenseMutation,
+  useDeleteExpenseMutation,
+} = expensesApi;

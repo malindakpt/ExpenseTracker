@@ -8,7 +8,7 @@ export const EXPENSE_CATEGORIES = [
   'other',
 ];
 
-export type ExpenseCategory = typeof EXPENSE_CATEGORIES;
+export type ExpenseCategory = (typeof EXPENSE_CATEGORIES)[number];
 
 export type Expense = {
   id: string;
