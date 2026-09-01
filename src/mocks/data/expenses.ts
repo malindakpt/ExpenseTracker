@@ -1,0 +1,50 @@
+import type { Expense } from "../../features/expenses/types/expense.types";
+
+export const expenses: Expense[] = [
+  {
+    id: '1',
+    title: 'Grocery shopping',
+    amount: 125.5,
+    date: '2026-08-31',
+    category: 'food',
+    notes: 'Weekly groceries',
+    createdAt: '2026-08-31T10:00:00.000Z',
+    updatedAt: '2026-08-31T10:00:00.000Z',
+  },
+  {
+    id: '2',
+    title: 'Uber to office',
+    amount: 18.75,
+    date: '2026-08-30',
+    category: 'travel',
+    createdAt: '2026-08-30T08:00:00.000Z',
+    updatedAt: '2026-08-30T08:00:00.000Z',
+  },
+  {
+    id: '3',
+    title: 'New headphones',
+    amount: 89.99,
+    date: '2026-08-29',
+    category: 'shopping',
+    createdAt: '2026-08-29T12:00:00.000Z',
+    updatedAt: '2026-08-29T12:00:00.000Z',
+  },
+  {
+    id: '4',
+    title: 'Electricity bill',
+    amount: 64.2,
+    date: '2026-08-28',
+    category: 'utilities',
+    createdAt: '2026-08-28T09:00:00.000Z',
+    updatedAt: '2026-08-28T09:00:00.000Z',
+  },
+  {
+    id: '5',
+    title: 'Dinner with friends',
+    amount: 52.4,
+    date: '2026-08-27',
+    category: 'entertainment',
+    createdAt: '2026-08-27T19:00:00.000Z',
+    updatedAt: '2026-08-27T19:00:00.000Z',
+  },
+];
