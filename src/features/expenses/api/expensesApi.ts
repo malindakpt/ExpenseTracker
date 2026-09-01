@@ -1,9 +1,9 @@
- import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import type { PaginatedExpensesResponse, GetExpensesParams } from '../types/expense-api.types';
 import type { CreateExpenseRequest, Expense, UpdateExpenseRequest } from '../types/expense.types';
- 
 
- export const expensesApi = createApi({
+
+export const expensesApi = createApi({
     reducerPath: 'expensesApi',
 
     baseQuery: fetchBaseQuery({
@@ -16,7 +16,11 @@ import type { CreateExpenseRequest, Expense, UpdateExpenseRequest } from '../typ
                 url: '/expenses',
                 params
             }),
-            providesTags: ['Expense'],
+            providesTags: (result) => result ? [
+                { type: 'Expense', id: 'LIST' },
+                ...result.data.map(({ id }) => (
+                    { type: 'Expense' as const, id }))] :
+                [{ type: 'Expense', id: 'LIST' }],
         }),
 
         createExpense: builder.mutation<Expense, CreateExpenseRequest>({
@@ -25,7 +29,7 @@ import type { CreateExpenseRequest, Expense, UpdateExpenseRequest } from '../typ
                 method: 'POST',
                 body
             }),
-            invalidatesTags: ['Expense'],
+            invalidatesTags: () => [{ type: 'Expense', id: 'LIST' }],
         }),
 
         updateExpense: builder.mutation<Expense, UpdateExpenseRequest>({
@@ -34,24 +38,30 @@ import type { CreateExpenseRequest, Expense, UpdateExpenseRequest } from '../typ
                 method: 'PATCH',
                 body
             }),
-            invalidatesTags: ['Expense'],
+            invalidatesTags: (_result, _error, { id }) => [
+                { type: 'Expense', id },
+                { type: 'Expense', id: 'LIST' }
+            ],
         }),
 
         deleteExpense: builder.mutation<void, string>({
             query: (id) => ({
                 url: `expenses/${id}`,
-                method:'DELETE'
+                method: 'DELETE'
             }),
-            invalidatesTags: ['Expense'],
+            invalidatesTags: (_result, _error, id) => [
+                { type: 'Expense', id },
+                { type: 'Expense', id: 'LIST' },
+            ],
         })
     }),
 
     tagTypes: ['Expense'],
- });
+});
 
 export const {
-  useGetExpensesQuery,
-  useCreateExpenseMutation,
-  useUpdateExpenseMutation,
-  useDeleteExpenseMutation,
+    useGetExpensesQuery,
+    useCreateExpenseMutation,
+    useUpdateExpenseMutation,
+    useDeleteExpenseMutation,
 } = expensesApi;
