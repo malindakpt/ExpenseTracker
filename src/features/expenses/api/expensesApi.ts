@@ -15,7 +15,8 @@ import type { CreateExpenseRequest, Expense, UpdateExpenseRequest } from '../typ
             query: (params) => ({
                 url: '/expenses',
                 params
-            })
+            }),
+            providesTags: ['Expense'],
         }),
 
         createExpense: builder.mutation<Expense, CreateExpenseRequest>({
@@ -23,7 +24,8 @@ import type { CreateExpenseRequest, Expense, UpdateExpenseRequest } from '../typ
                 url: '/expenses',
                 method: 'POST',
                 body
-            })
+            }),
+            invalidatesTags: ['Expense'],
         }),
 
         updateExpense: builder.mutation<Expense, UpdateExpenseRequest>({
@@ -31,14 +33,16 @@ import type { CreateExpenseRequest, Expense, UpdateExpenseRequest } from '../typ
                 url: `expenses/${id}`,
                 method: 'PATCH',
                 body
-            })
+            }),
+            invalidatesTags: ['Expense'],
         }),
 
         deleteExpense: builder.mutation<void, string>({
             query: (id) => ({
                 url: `expenses/${id}`,
                 method:'DELETE'
-            })
+            }),
+            invalidatesTags: ['Expense'],
         })
     }),
 

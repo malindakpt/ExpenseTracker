@@ -1,7 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { expensesApi } from '../features/expenses/api/expensesApi';
 
 export const store = configureStore({
-  reducer: {},
+  reducer: {
+    [expensesApi.reducerPath]: expensesApi.reducer
+  },
+
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(expensesApi.middleware)
 });
 
 export type RootState = ReturnType<typeof store.getState>;
