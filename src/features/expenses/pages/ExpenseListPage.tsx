@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useDeleteExpenseMutation, useGetExpensesQuery } from '../api/expensesApi'
 import { Expense, ExpenseCategory } from '../types/expense.types';
 import { ExpenseFilters } from '../components/ExpenseFilters';
@@ -30,19 +30,19 @@ export const ExpenseListPage = () => {
     });
     
 
-    const handleCategoryChange = (
+    const handleCategoryChange = useCallback((
         value?: ExpenseCategory,
     ) => {
         setCategory(value);
         resetPage();
         resetPagination();
-    };
+    }, [resetPage, resetPagination]);
 
-    const handleDelete = async (id: string) => {
+    const handleDelete = useCallback(async (id: string) => {
         await deleteExpense(id);
         resetPage();
         resetPagination();
-    };
+    }, [deleteExpense, resetPage, resetPagination]);
 
     if (isLoading) {
         return <p className={styles.loading}>Loading expenses...</p>;

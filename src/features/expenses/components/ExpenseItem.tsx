@@ -1,4 +1,5 @@
 import type { Expense } from '../types/expense.types';
+import { memo } from 'react';
 import styles from './ExpenseItem.module.scss';
 
 interface ExpenseItemProps {
@@ -6,7 +7,7 @@ interface ExpenseItemProps {
     onDelete: (id: string) => void;
 }
 
-export const ExpenseItem = ({
+export const ExpenseItem = memo(({
     expense,
     onDelete,
 }: ExpenseItemProps) => {
@@ -30,4 +31,4 @@ export const ExpenseItem = ({
             </div>
         </article>
     );
-}
+});

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import type { SortOrder } from '../types/paginatedApi.types';
 
 
@@ -16,19 +16,19 @@ export const useListControls = <TSortField,>({
     const [sortOrder, setSortOrder] = useState<SortOrder>(initialSortOrder ?? 'asc');
     const [page, setPage] = useState(1);
 
-    const handleSortChange = (field: TSortField, order: SortOrder) => {
+    const handleSortChange = useCallback((field: TSortField, order: SortOrder) => {
         setSortBy(field);
         setSortOrder(order);
         setPage(1);
-    };
+    }, []);
 
-    const nextPage = () => {
+    const nextPage = useCallback(() => {
         setPage((current) => current + 1);
-    };
+    }, []);
 
-    const resetPage = () => {
+    const resetPage = useCallback(() => {
         setPage(1);
-    };
+    }, []);
 
     return {
         sortBy,

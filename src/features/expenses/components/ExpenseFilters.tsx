@@ -1,4 +1,5 @@
 import type { SortField, SortOrder } from '../../../types/paginatedApi.types';
+import { memo } from 'react';
 import {
     EXPENSE_CATEGORIES,
     type ExpenseCategory,
@@ -19,7 +20,7 @@ interface ExpenseFiltersProps {
     ) => void;
 }
 
-export const ExpenseFilters = ({
+export const ExpenseFilters = memo(({
     category,
     sortBy,
     sortOrder,
@@ -79,4 +80,4 @@ export const ExpenseFilters = ({
             </Select>
         </div>
     );
-}
+});
