@@ -7,7 +7,7 @@ export const expensesApi = createApi({
     reducerPath: 'expensesApi',
 
     baseQuery: fetchBaseQuery({
-        baseUrl: '/api'
+        baseUrl: '/api/'
     }),
 
     endpoints: (builder) => ({
