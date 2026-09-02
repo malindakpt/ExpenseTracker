@@ -25,7 +25,7 @@ export const ExpenseFilters = ({
     onSortChange,
 }: ExpenseFiltersProps) => {
     return (
-        <div>
+        <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr 1fr'}}>
             <label>
                 Category
                 <select
@@ -68,7 +68,6 @@ export const ExpenseFilters = ({
 
             <label>
                 Order
-
                 <select
                     value={sortOrder}
                     onChange={(event) => {
