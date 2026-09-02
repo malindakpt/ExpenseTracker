@@ -17,15 +17,15 @@ import type {
 
 import { ExpenseFilters } from '../components/ExpenseFilters';
 import { ExpenseList } from '../components/ExpenseList';
+import { usePagination } from '../../../hooks/usePagination';
 
-const PAGE_SIZE = 10;
+const PAGE_SIZE = 4;
 
 export const ExpenseListPage = () => {
     const [category, setCategory] = useState<ExpenseCategory>();
     const [sortBy, setSortBy] = useState<ExpenseSortField>('date');
     const [sortOrder, setSortOrder] = useState<SortOrder>('desc');
-    const [page, setPage] = useState(1);
-    const [loadedExpenses, setLoadedExpenses] = useState<Expense[]>([]);
+    const [page, setPage] = useState(1); 
 
     const { data, isLoading, isFetching } = useGetExpensesQuery({
         page,
@@ -35,31 +35,17 @@ export const ExpenseListPage = () => {
         sortOrder,
     });
 
+    const { items,resetData } = usePagination<Expense>({data, isFetching, page})
+
     const [deleteExpense] = useDeleteExpenseMutation();
 
-    useEffect(() => {
-        if (!data) {
-            return;
-        }
-
-        setLoadedExpenses((current) => {
-            if (page === 1) {
-                return data.data;
-            }
-
-            const existingIds = new Set(current.map((expense) => expense.id));
-            const newExpenses = data.data.filter((expense) => !existingIds.has(expense.id));
-
-            return [...current, ...newExpenses];
-        });
-    }, [data, page]);
 
     const handleCategoryChange = (
         value?: ExpenseCategory,
     ) => {
         setCategory(value);
         setPage(1);
-        setLoadedExpenses([]);
+        resetData();
     };
 
     const handleSortChange = (
@@ -69,7 +55,7 @@ export const ExpenseListPage = () => {
         setSortBy(field);
         setSortOrder(order);
         setPage(1);
-        setLoadedExpenses([]);
+        resetData();
     };
 
     const handleEdit = (expense: Expense) => {
@@ -97,7 +83,7 @@ export const ExpenseListPage = () => {
             />
 
             <ExpenseList
-                expenses={loadedExpenses}
+                expenses={items}
                 onEdit={handleEdit}
                 onDelete={handleDelete}
             />

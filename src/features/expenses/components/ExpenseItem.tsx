@@ -14,7 +14,7 @@ export const ExpenseItem = ({
     return (
         <div>
             <div>
-                <h3>{expense.title}</h3>
+                <h3>{expense.id}: {expense.title}</h3>
 
                 <p>
                     {expense.category} · {expense.date}
