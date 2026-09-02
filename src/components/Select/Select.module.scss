@@ -1,0 +1,34 @@
+.field {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.label {
+  color: #475569;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.select {
+  width: 100%;
+  height: 2.6rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  background: #fff;
+  padding: 0 0.75rem;
+  color: #1e293b;
+  outline: none;
+
+  &:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+  }
+}
+
+.error {
+  margin: 0;
+  color: #b4233c;
+  font-size: 0.8rem;
+}

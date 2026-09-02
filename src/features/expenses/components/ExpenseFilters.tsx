@@ -3,6 +3,8 @@ import {
     EXPENSE_CATEGORIES,
     type ExpenseCategory,
 } from '../types/expense.types';
+import { Select } from '../../../components/Select/Select';
+import styles from './ExpenseFilters.module.scss';
 
 interface ExpenseFiltersProps {
     category?: ExpenseCategory;
@@ -25,62 +27,56 @@ export const ExpenseFilters = ({
     onSortChange,
 }: ExpenseFiltersProps) => {
     return (
-        <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr 1fr'}}>
-            <label>
-                Category
-                <select
-                    value={category ?? ''}
-                    onChange={(event) => {
-                        const value = event.target.value;
+        <div className={styles.filters}>
+            <Select
+                label="Category"
+                value={category ?? ''}
+                onChange={(event) => {
+                    const value = event.target.value;
 
-                        onCategoryChange(
-                            value
-                                ? (value as ExpenseCategory)
-                                : undefined,
-                        );
-                    }}
-                >
-                    <option value="">All</option>
+                    onCategoryChange(
+                        value
+                            ? (value as ExpenseCategory)
+                            : undefined,
+                    );
+                }}
+            >
+                <option value="">All</option>
 
-                    {EXPENSE_CATEGORIES.map((item) => (
-                        <option key={item} value={item}>
-                            {item}
-                        </option>
-                    ))}
-                </select>
-            </label>
+                {EXPENSE_CATEGORIES.map((item) => (
+                    <option key={item} value={item}>
+                        {item}
+                    </option>
+                ))}
+            </Select>
 
-            <label>
-                Sort by
-                <select
-                    value={sortBy}
-                    onChange={(event) => {
-                        onSortChange(
-                            event.target.value as SortField,
-                            sortOrder,
-                        );
-                    }}
-                >
-                    <option value="date">Date</option>
-                    <option value="amount">Amount</option>
-                </select>
-            </label>
+            <Select
+                label="Sort by"
+                value={sortBy}
+                onChange={(event) => {
+                    onSortChange(
+                        event.target.value as SortField,
+                        sortOrder,
+                    );
+                }}
+            >
+                <option value="date">Date</option>
+                <option value="amount">Amount</option>
+            </Select>
 
-            <label>
-                Order
-                <select
-                    value={sortOrder}
-                    onChange={(event) => {
-                        onSortChange(
-                            sortBy,
-                            event.target.value as SortOrder,
-                        );
-                    }}
-                >
-                    <option value="desc">Descending</option>
-                    <option value="asc">Ascending</option>
-                </select>
-            </label>
+            <Select
+                label="Order"
+                value={sortOrder}
+                onChange={(event) => {
+                    onSortChange(
+                        sortBy,
+                        event.target.value as SortOrder,
+                    );
+                }}
+            >
+                <option value="desc">Descending</option>
+                <option value="asc">Ascending</option>
+            </Select>
         </div>
     );
 }

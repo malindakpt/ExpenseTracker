@@ -1,0 +1,75 @@
+.item {
+  display: grid;
+  gap: 1rem;
+  border-bottom: 1px solid #e2e8f0;
+  background: #fff;
+  padding: 1rem;
+  transition: border-color 150ms ease;
+
+  &:hover {
+    border-color: #94a3b8;
+  }
+}
+
+.title {
+  margin: 0;
+  overflow: hidden;
+  color: #1e293b;
+  font-size: 1rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.meta,
+.notes {
+  margin: 0.4rem 0 0;
+  color: #64748b;
+  font-size: 0.875rem;
+}
+
+.notes {
+  color: #475569;
+  line-height: 1.5;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.amount {
+  color: #1e40af;
+  font-size: 1.125rem;
+}
+
+.delete {
+  border: 1px solid rgba(180, 35, 60, 0.25);
+  border-radius: 6px;
+  background: #fff;
+  padding: 0.55rem 0.75rem;
+  color: #b4233c;
+  cursor: pointer;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+
+  &:hover {
+    border-color: #b4233c;
+    background: #fff2f4;
+  }
+}
+
+@media (min-width: 640px) {
+  .item {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    padding: 1.25rem;
+  }
+
+  .actions {
+    justify-content: end;
+  }
+}

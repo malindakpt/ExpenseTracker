@@ -2,6 +2,9 @@ import { useState } from 'react';
 import type { CreateExpenseRequest } from '../types/expense.types';
 import { EXPENSE_CATEGORIES } from '../types/expense.types';
 import { createExpenseSchema } from '../validation/expense.schema';
+import { Input } from '../../../components/Input/Input';
+import { Select } from '../../../components/Select/Select';
+import styles from './ExpenseForm.module.scss';
 
 interface ExpenseFormProps {
     isSubmitting: boolean;
@@ -68,60 +71,53 @@ export const ExpenseForm = ({
     };
 
     return (
-        <form onSubmit={handleSubmit} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr', placeItems: 'center' }}>
-            <label>
-                <input
-                    placeholder='Title'
-                    value={values.title}
-                    onChange={(event) => updateValue('title', event.target.value)}
-                />
-                {errors.title && <p style={{ color: 'red' }} role="alert">{errors.title}</p>}
-            </label>
+        <form className={styles.form} onSubmit={handleSubmit}>
+            <Input
+                error={errors.title}
+                label="Title"
+                placeholder="Title"
+                value={values.title}
+                onChange={(event) => updateValue('title', event.target.value)}
+            />
 
-            <label>
-                <input
-                    placeholder='Amount'
-                    min="0.01"
-                    step="0.01"
-                    type="number"
-                    value={values.amount}
-                    onChange={(event) => updateValue('amount', event.target.value)}
-                />
-                {errors.amount && <p role="alert" style={{ color: 'red' }}>{errors.amount}</p>}
-            </label>
+            <Input
+                error={errors.amount}
+                label="Amount"
+                placeholder="Amount"
+                min="0.01"
+                step="0.01"
+                type="number"
+                value={values.amount}
+                onChange={(event) => updateValue('amount', event.target.value)}
+            />
 
-            <label>
-                Date
-                <input
-                    type="date"
-                    value={values.date}
-                    onChange={(event) => updateValue('date', event.target.value)}
-                />
-                {errors.date && <p role="alert" style={{ color: 'red' }}>{errors.date}</p>}
-            </label>
+            <Input
+                error={errors.date}
+                label="Date"
+                type="date"
+                value={values.date}
+                onChange={(event) => updateValue('date', event.target.value)}
+            />
 
-            <label>
-                Category
-                <select
-                    value={values.category}
-                    onChange={(event) => updateValue('category', event.target.value)}
-                >
-                    <option value="">Select a category</option>
-                    {EXPENSE_CATEGORIES.map((category) => (
-                        <option key={category} value={category}>
-                            {category}
-                        </option>
-                    ))}
-                </select>
-                {errors.category && <p role="alert" style={{ color: 'red' }}>{errors.category}</p>}
-            </label>
+            <Select
+                error={errors.category}
+                label="Category"
+                value={values.category}
+                onChange={(event) => updateValue('category', event.target.value)}
+            >
+                <option value="">Select a category</option>
+                {EXPENSE_CATEGORIES.map((category) => (
+                    <option key={category} value={category}>
+                        {category}
+                    </option>
+                ))}
+            </Select>
 
-
-            {submitError && <p role="alert">{submitError}</p>}
-
-            <button style={{ margin: 20 }} disabled={isSubmitting} type="submit">
+            <button className={styles.submit} disabled={isSubmitting} type="submit">
                 {isSubmitting ? 'Adding...' : 'Add expense'}
             </button>
+
+            {submitError && <p className={styles.submitError} role="alert">{submitError}</p>}
         </form>
     );
 };

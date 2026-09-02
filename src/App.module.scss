@@ -1,0 +1,27 @@
+:global(*) {
+  box-sizing: border-box;
+}
+
+:global(body) {
+  margin: 0;
+  min-width: 320px;
+  background: #f8fafc;
+  color: #1e293b;
+  font-family: Arial, sans-serif;
+}
+
+.app {
+  min-height: auto;
+  padding: 1.5rem 1rem;
+}
+
+.content {
+  margin: 0 auto;
+  max-width: 64rem;
+}
+
+@media (min-width: 640px) {
+  .app {
+    padding: 2rem;
+  }
+}

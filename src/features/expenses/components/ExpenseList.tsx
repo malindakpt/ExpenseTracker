@@ -1,5 +1,6 @@
 import type { Expense } from '../types/expense.types';
 import { ExpenseItem } from './ExpenseItem';
+import styles from './ExpenseList.module.scss';
 
 interface ExpenseListProps {
     expenses: Expense[];
@@ -11,11 +12,11 @@ export const ExpenseList = ({
     onDelete,
 }: ExpenseListProps) => {
     if (expenses.length === 0) {
-        return <p>No expenses found.</p>;
+        return <p className={styles.empty}>No expenses found.</p>;
     }
 
     return (
-        <div>
+        <div className={styles.list}>
             {expenses.map((expense) => (
                 <ExpenseItem
                     key={expense.id}

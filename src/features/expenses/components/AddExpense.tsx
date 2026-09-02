@@ -1,6 +1,7 @@
 import { useCreateExpenseMutation } from '../api/expensesApi';
 import type { CreateExpenseRequest } from '../types/expense.types';
 import { ExpenseForm } from './ExpenseForm';
+import styles from './AddExpense.module.scss';
 
 export const AddExpense = () => {
     const [createExpense, { isLoading: isCreating }] = useCreateExpenseMutation();
@@ -10,11 +11,12 @@ export const AddExpense = () => {
     };
 
     return (
-        <div>
+        <section className={styles.section}>
+            <h2 className={styles.heading}>Record an expense</h2>
             <ExpenseForm
                 isSubmitting={isCreating}
                 onSubmit={handleCreate}
             />
-        </div>
+        </section>
     );
 };

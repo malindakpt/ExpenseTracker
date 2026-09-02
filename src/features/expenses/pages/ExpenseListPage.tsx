@@ -6,6 +6,7 @@ import { ExpenseList } from '../components/ExpenseList';
 import { usePagination } from '../../../hooks/usePagination';
 import { SortField } from '../../../types/paginatedApi.types';
 import { useListControls } from '../../../hooks/useListControls';
+import styles from './ExpenseListPage.module.scss';
 
 const PAGE_SIZE = 4;
 
@@ -44,20 +45,27 @@ export const ExpenseListPage = () => {
     };
 
     if (isLoading) {
-        return <p>Loading expenses...</p>;
+        return <p className={styles.loading}>Loading expenses...</p>;
     }
 
     return (
-        <main>
-            <h1>Expense Tracker</h1>
+        <main className={styles.page}>
+            <header className={styles.header}>
+                <div>
+                    <p className={styles.eyebrow}>Expense ledger</p>
+                    <h1 className={styles.title}>Expenses</h1>
+                </div>
+            </header>
 
-            <ExpenseFilters
-                category={category}
-                sortBy={sortBy}
-                sortOrder={sortOrder}
-                onCategoryChange={handleCategoryChange}
-                onSortChange={handleSortChange}
-            />
+            <section className={styles.filterArea}>
+                <ExpenseFilters
+                    category={category}
+                    sortBy={sortBy}
+                    sortOrder={sortOrder}
+                    onCategoryChange={handleCategoryChange}
+                    onSortChange={handleSortChange}
+                />
+            </section>
 
             <ExpenseList
                 expenses={items}
@@ -66,9 +74,10 @@ export const ExpenseListPage = () => {
 
             {hasMore && (
                 <button
+                    className={styles.loadMore}
                     disabled={isFetching}
                     onClick={ nextPage }
-                    style={{marginTop: 20}}
+                    type="button"
                 >
                     {isFetching ? 'Loading...' : 'Load More'}
                 </button>
