@@ -68,6 +68,7 @@ export const ExpenseListPage = () => {
                 <button
                     disabled={isFetching}
                     onClick={ nextPage }
+                    style={{marginTop: 20}}
                 >
                     {isFetching ? 'Loading...' : 'Load More'}
                 </button>
