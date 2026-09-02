@@ -1,11 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-
-interface PaginatedResponse<T> {
-    data: T[];
-    page: number;
-    limit: number;
-    total: number;
-}
+import type { PaginatedResponse } from "../types/paginatedResponse";
 
 interface UsePaginationOptions<T> {
     page: number;
@@ -43,7 +37,7 @@ export const usePagination = <T extends HasId>({
         });
     }, [data, page]);
 
-    const hasMore = data?.total && (loadedItems.length < data.total);
+    const hasMore = Boolean(data && loadedItems.length < data.total);
 
     return {
         items: loadedItems,

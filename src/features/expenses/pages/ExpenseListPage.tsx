@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import {
     useDeleteExpenseMutation,
@@ -27,15 +27,21 @@ export const ExpenseListPage = () => {
     const [sortOrder, setSortOrder] = useState<SortOrder>('desc');
     const [page, setPage] = useState(1); 
 
-    const { data, isLoading, isFetching } = useGetExpensesQuery({
-        page,
-        limit: PAGE_SIZE,
-        category,
-        sortBy,
-        sortOrder,
-    });
+    const { currentData, isLoading, isFetching } = useGetExpensesQuery(
+        {
+            page,
+            limit: PAGE_SIZE,
+            category,
+            sortBy,
+            sortOrder,
+        }
+    );
 
-    const { items,resetData } = usePagination<Expense>({data, isFetching, page})
+    const { hasMore, items, resetData } = usePagination<Expense>({
+        data: currentData,
+        isFetching,
+        page,
+    });
 
     const [deleteExpense] = useDeleteExpenseMutation();
 
@@ -64,6 +70,8 @@ export const ExpenseListPage = () => {
 
     const handleDelete = async (id: string) => {
         await deleteExpense(id).unwrap();
+        setPage(1);
+        resetData();
     };
 
     if (isLoading) {
@@ -88,7 +96,7 @@ export const ExpenseListPage = () => {
                 onDelete={handleDelete}
             />
 
-            {data?.hasMore && (
+            {hasMore && (
                 <button
                     disabled={isFetching}
                     onClick={() =>
