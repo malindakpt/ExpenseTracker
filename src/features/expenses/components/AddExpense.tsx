@@ -10,11 +10,11 @@ export const AddExpense = () => {
     };
 
     return (
-        <section> 
-                <ExpenseForm
-                    isSubmitting={isCreating} 
-                    onSubmit={handleCreate}
-                /> 
-        </section>
+        <div>
+            <ExpenseForm
+                isSubmitting={isCreating}
+                onSubmit={handleCreate}
+            />
+        </div>
     );
 };
