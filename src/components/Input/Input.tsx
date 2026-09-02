@@ -8,6 +8,8 @@ interface InputProps extends ComponentPropsWithoutRef<'input'> {
 }
 
 export const Input = ({
+    'aria-describedby': ariaDescribedBy,
+    'aria-invalid': ariaInvalid,
     className,
     error,
     id,
@@ -22,7 +24,8 @@ export const Input = ({
         <label className={styles.field}>
             <span className={styles.label}>{label}</span>
             <input
-                aria-describedby={error ? errorId : undefined}
+                aria-describedby={[ariaDescribedBy, error ? errorId : undefined].filter(Boolean).join(' ') || undefined}
+                aria-invalid={error ? true : ariaInvalid}
                 className={[styles.input, className].filter(Boolean).join(' ')}
                 id={inputId}
                 {...props}

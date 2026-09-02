@@ -20,7 +20,7 @@ export const usePagination = <T extends HasId>({
 
     const resetPagination = useCallback(() => {
         setLoadedItems([])
-    }, [setLoadedItems])
+    }, [setLoadedItems]);
 
     useEffect(() => {
         if (!data) return;

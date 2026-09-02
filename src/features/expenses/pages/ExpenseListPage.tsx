@@ -44,10 +44,6 @@ export const ExpenseListPage = () => {
         resetPagination();
     }, [deleteExpense, resetPage, resetPagination]);
 
-    if (isLoading) {
-        return <p className={styles.loading}>Loading expenses...</p>;
-    }
-
     return (
         <main className={styles.page}>
             <header className={styles.header}>
@@ -57,7 +53,7 @@ export const ExpenseListPage = () => {
                 </div>
             </header>
 
-            <section className={styles.filterArea}>
+            <section aria-label="Filter expenses" className={styles.filterArea}>
                 <ExpenseFilters
                     category={category}
                     sortBy={sortBy}
@@ -67,13 +63,20 @@ export const ExpenseListPage = () => {
                 />
             </section>
 
-            <ExpenseList
-                expenses={items}
-                onDelete={handleDelete}
-            />
+            <section aria-busy={isFetching} aria-label="Expense results">
+                {isLoading ? (
+                    <p className={styles.loading} role="status">Loading expenses...</p>
+                ) : (
+                    <ExpenseList
+                        expenses={items}
+                        onDelete={handleDelete}
+                    />
+                )}
+            </section>
 
-            {hasMore && (
+            {!isLoading && hasMore && (
                 <button
+                    aria-label="Load more expenses"
                     className={styles.loadMore}
                     disabled={isFetching}
                     onClick={ nextPage }

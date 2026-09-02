@@ -8,6 +8,8 @@ interface SelectProps extends ComponentPropsWithoutRef<'select'> {
 }
 
 export const Select = ({
+    'aria-describedby': ariaDescribedBy,
+    'aria-invalid': ariaInvalid,
     className,
     error,
     id,
@@ -22,7 +24,8 @@ export const Select = ({
         <label className={styles.field}>
             <span className={styles.label}>{label}</span>
             <select
-                aria-describedby={error ? errorId : undefined}
+                aria-describedby={[ariaDescribedBy, error ? errorId : undefined].filter(Boolean).join(' ') || undefined}
+                aria-invalid={error ? true : ariaInvalid}
                 className={[styles.select, className].filter(Boolean).join(' ')}
                 id={selectId}
                 {...props}

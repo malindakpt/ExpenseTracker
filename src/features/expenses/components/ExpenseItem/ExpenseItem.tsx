@@ -12,9 +12,9 @@ export const ExpenseItem = memo(({
     onDelete,
 }: ExpenseItemProps) => {
     return (
-        <article className={styles.item}>
+        <li className={styles.item}>
             <div>
-                <h3 className={styles.title}>{expense.title}</h3>
+            <h2 className={styles.title}>{expense.title}</h2>
                 <p className={styles.meta}>
                     {expense.category} · {expense.date}
                 </p>
@@ -23,10 +23,15 @@ export const ExpenseItem = memo(({
 
             <div className={styles.actions}>
                 <strong className={styles.amount}>${expense.amount.toFixed(2)}</strong>
-                <button className={styles.delete} onClick={() => onDelete(expense.id)} type="button">
+                <button
+                    aria-label={`Delete expense: ${expense.title}`}
+                    className={styles.delete}
+                    onClick={() => onDelete(expense.id)}
+                    type="button"
+                >
                     Delete
                 </button>
             </div>
-        </article>
+        </li>
     );
 });

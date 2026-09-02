@@ -13,11 +13,11 @@ export const ExpenseList = memo(({
     onDelete,
 }: ExpenseListProps) => {
     if (expenses.length === 0) {
-        return <p className={styles.empty}>No expenses found.</p>;
+        return <p className={styles.empty} role="status">No expenses found.</p>;
     }
 
     return (
-        <div className={styles.list}>
+        <ul aria-label="Expenses" className={styles.list}>
             {expenses.map((expense) => (
                 <ExpenseItem
                     key={expense.id}
@@ -25,6 +25,6 @@ export const ExpenseList = memo(({
                     onDelete={onDelete}
                 />
             ))}
-        </div>
+        </ul>
     );
 });

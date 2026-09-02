@@ -71,7 +71,7 @@ export const ExpenseForm = ({
     };
 
     return (
-        <form className={styles.form} onSubmit={handleSubmit}>
+        <form aria-busy={isSubmitting} className={styles.form} onSubmit={handleSubmit}>
             <Input
                 error={errors.title}
                 label="Title"
@@ -117,6 +117,9 @@ export const ExpenseForm = ({
                 {isSubmitting ? 'Adding...' : 'Add expense'}
             </button>
 
+            <p className={styles.status} role="status">
+                {isSubmitting ? 'Adding expense' : ''}
+            </p>
             {submitError && <p className={styles.submitError} role="alert">{submitError}</p>}
         </form>
     );
