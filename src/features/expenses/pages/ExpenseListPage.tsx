@@ -1,32 +1,18 @@
 import { useState } from 'react';
-
-import {
-    useDeleteExpenseMutation,
-    useGetExpensesQuery,
-} from '../api/expensesApi';
-
-import type {
-    Expense,
-    ExpenseCategory,
-} from '../types/expense.types';
-
-import type {
-    ExpenseSortField,
-    SortOrder,
-} from '../types/expense-api.types';
-
+import { useDeleteExpenseMutation, useGetExpensesQuery } from '../api/expensesApi'
+import { Expense, ExpenseCategory } from '../types/expense.types';
 import { ExpenseFilters } from '../components/ExpenseFilters';
 import { ExpenseList } from '../components/ExpenseList';
 import { usePagination } from '../../../hooks/usePagination';
+import { SortField } from '../../../types/paginatedApi.types';
+import { useListControls } from '../../../hooks/useListControls';
 
 const PAGE_SIZE = 4;
 
 export const ExpenseListPage = () => {
+    const [deleteExpense] = useDeleteExpenseMutation();
     const [category, setCategory] = useState<ExpenseCategory>();
-    const [sortBy, setSortBy] = useState<ExpenseSortField>('date');
-    const [sortOrder, setSortOrder] = useState<SortOrder>('desc');
-    const [page, setPage] = useState(1); 
-
+    const { sortBy, sortOrder, page, nextPage, handleSortChange , resetPage} = useListControls<SortField>({initialSortBy: 'date'});
     const { currentData, isLoading, isFetching } = useGetExpensesQuery(
         {
             page,
@@ -36,42 +22,25 @@ export const ExpenseListPage = () => {
             sortOrder,
         }
     );
-
-    const { hasMore, items, resetData } = usePagination<Expense>({
+    const { hasMore, items, resetPagination } = usePagination<Expense>({
         data: currentData,
         isFetching,
         page,
     });
-
-    const [deleteExpense] = useDeleteExpenseMutation();
-
+    
 
     const handleCategoryChange = (
         value?: ExpenseCategory,
     ) => {
         setCategory(value);
-        setPage(1);
-        resetData();
-    };
-
-    const handleSortChange = (
-        field: ExpenseSortField,
-        order: SortOrder,
-    ) => {
-        setSortBy(field);
-        setSortOrder(order);
-        setPage(1);
-        resetData();
-    };
-
-    const handleEdit = (expense: Expense) => {
-        console.log('Edit:', expense);
+        resetPage();
+        resetPagination();
     };
 
     const handleDelete = async (id: string) => {
-        await deleteExpense(id).unwrap();
-        setPage(1);
-        resetData();
+        await deleteExpense(id);
+        resetPage();
+        resetPagination();
     };
 
     if (isLoading) {
@@ -92,16 +61,13 @@ export const ExpenseListPage = () => {
 
             <ExpenseList
                 expenses={items}
-                onEdit={handleEdit}
                 onDelete={handleDelete}
             />
 
             {hasMore && (
                 <button
                     disabled={isFetching}
-                    onClick={() =>
-                        setPage((current) => current + 1)
-                    }
+                    onClick={ nextPage }
                 >
                     {isFetching ? 'Loading...' : 'Load More'}
                 </button>

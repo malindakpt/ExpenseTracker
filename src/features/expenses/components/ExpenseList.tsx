@@ -3,13 +3,11 @@ import { ExpenseItem } from './ExpenseItem';
 
 interface ExpenseListProps {
     expenses: Expense[];
-    onEdit: (expense: Expense) => void;
     onDelete: (id: string) => void;
 }
 
 export const ExpenseList = ({
     expenses,
-    onEdit,
     onDelete,
 }: ExpenseListProps) => {
     if (expenses.length === 0) {
@@ -22,7 +20,6 @@ export const ExpenseList = ({
                 <ExpenseItem
                     key={expense.id}
                     expense={expense}
-                    onEdit={onEdit}
                     onDelete={onDelete}
                 />
             ))}

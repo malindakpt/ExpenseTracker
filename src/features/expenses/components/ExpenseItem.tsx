@@ -2,13 +2,11 @@ import type { Expense } from '../types/expense.types';
 
 interface ExpenseItemProps {
     expense: Expense;
-    onEdit: (expense: Expense) => void;
     onDelete: (id: string) => void;
 }
 
 export const ExpenseItem = ({
     expense,
-    onEdit,
     onDelete,
 }: ExpenseItemProps) => {
     return (
@@ -26,10 +24,6 @@ export const ExpenseItem = ({
             <strong>${expense.amount.toFixed(2)}</strong>
 
             <div>
-                <button onClick={() => onEdit(expense)}>
-                    Edit
-                </button>
-
                 <button onClick={() => onDelete(expense.id)}>
                     Delete
                 </button>

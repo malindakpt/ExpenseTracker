@@ -1,21 +1,18 @@
+import type { SortField, SortOrder } from '../../../types/paginatedApi.types';
 import {
     EXPENSE_CATEGORIES,
     type ExpenseCategory,
 } from '../types/expense.types';
-import type {
-    ExpenseSortField,
-    SortOrder,
-} from '../types/expense-api.types';
 
 interface ExpenseFiltersProps {
     category?: ExpenseCategory;
-    sortBy: ExpenseSortField;
+    sortBy: SortField;
     sortOrder: SortOrder;
     onCategoryChange: (
         category?: ExpenseCategory,
     ) => void;
     onSortChange: (
-        sortBy: ExpenseSortField,
+        sortBy: SortField,
         sortOrder: SortOrder,
     ) => void;
 }
@@ -31,7 +28,6 @@ export const ExpenseFilters = ({
         <div>
             <label>
                 Category
-
                 <select
                     value={category ?? ''}
                     onChange={(event) => {
@@ -56,12 +52,11 @@ export const ExpenseFilters = ({
 
             <label>
                 Sort by
-
                 <select
                     value={sortBy}
                     onChange={(event) => {
                         onSortChange(
-                            event.target.value as ExpenseSortField,
+                            event.target.value as SortField,
                             sortOrder,
                         );
                     }}

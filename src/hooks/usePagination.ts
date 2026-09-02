@@ -18,7 +18,7 @@ export const usePagination = <T extends HasId>({
 }: UsePaginationOptions<T>) => {
     const [loadedItems, setLoadedItems] = useState<T[]>([]);
 
-    const resetData = useCallback(() => {
+    const resetPagination = useCallback(() => {
         setLoadedItems([])
     }, [setLoadedItems])
 
@@ -44,6 +44,6 @@ export const usePagination = <T extends HasId>({
         page,
         hasMore,
         isFetching,
-        resetData
+        resetPagination
     };
 }
