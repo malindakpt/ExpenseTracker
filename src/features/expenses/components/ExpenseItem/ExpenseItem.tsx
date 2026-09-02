@@ -1,5 +1,5 @@
-import type { Expense } from '../types/expense.types';
 import { memo } from 'react';
+import type { Expense } from '../../types/expense.types';
 import styles from './ExpenseItem.module.scss';
 
 interface ExpenseItemProps {
@@ -14,12 +14,10 @@ export const ExpenseItem = memo(({
     return (
         <article className={styles.item}>
             <div>
-            <h3 className={styles.title}>{expense.title}</h3>
-
-            <p className={styles.meta}>
+                <h3 className={styles.title}>{expense.title}</h3>
+                <p className={styles.meta}>
                     {expense.category} · {expense.date}
                 </p>
-
                 {expense.notes && <p className={styles.notes}>{expense.notes}</p>}
             </div>
 

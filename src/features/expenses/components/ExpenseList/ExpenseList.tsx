@@ -1,6 +1,6 @@
-import type { Expense } from '../types/expense.types';
 import { memo } from 'react';
-import { ExpenseItem } from './ExpenseItem';
+import type { Expense } from '../../types/expense.types';
+import { ExpenseItem } from '../ExpenseItem/ExpenseItem';
 import styles from './ExpenseList.module.scss';
 
 interface ExpenseListProps {

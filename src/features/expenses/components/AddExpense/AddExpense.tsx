@@ -1,6 +1,6 @@
-import { useCreateExpenseMutation } from '../api/expensesApi';
-import type { CreateExpenseRequest } from '../types/expense.types';
-import { ExpenseForm } from './ExpenseForm';
+import { useCreateExpenseMutation } from '../../api/expensesApi';
+import type { CreateExpenseRequest } from '../../types/expense.types';
+import { ExpenseForm } from '../ExpenseForm/ExpenseForm';
 import styles from './AddExpense.module.scss';
 
 export const AddExpense = () => {

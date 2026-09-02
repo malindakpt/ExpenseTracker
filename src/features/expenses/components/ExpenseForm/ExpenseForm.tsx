@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import type { CreateExpenseRequest } from '../types/expense.types';
-import { EXPENSE_CATEGORIES } from '../types/expense.types';
-import { createExpenseSchema } from '../validation/expense.schema';
-import { Input } from '../../../components/Input/Input';
-import { Select } from '../../../components/Select/Select';
+import { Input } from '../../../../components/Input/Input';
+import { Select } from '../../../../components/Select/Select';
+import type { CreateExpenseRequest } from '../../types/expense.types';
+import { EXPENSE_CATEGORIES } from '../../types/expense.types';
+import { createExpenseSchema } from '../../validation/expense.schema';
 import styles from './ExpenseForm.module.scss';
 
 interface ExpenseFormProps {

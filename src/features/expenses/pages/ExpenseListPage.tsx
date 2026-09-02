@@ -1,8 +1,8 @@
 import { useCallback, useState } from 'react';
 import { useDeleteExpenseMutation, useGetExpensesQuery } from '../api/expensesApi'
 import { Expense, ExpenseCategory } from '../types/expense.types';
-import { ExpenseFilters } from '../components/ExpenseFilters';
-import { ExpenseList } from '../components/ExpenseList';
+import { ExpenseFilters } from '../components/ExpenseFilters/ExpenseFilters';
+import { ExpenseList } from '../components/ExpenseList/ExpenseList';
 import { usePagination } from '../../../hooks/usePagination';
 import { SortField } from '../../../types/paginatedApi.types';
 import { useListControls } from '../../../hooks/useListControls';

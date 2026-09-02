@@ -1,4 +1,4 @@
-import { AddExpense } from './features/expenses/components/AddExpense';
+import { AddExpense } from './features/expenses/components/AddExpense/AddExpense';
 import { ExpenseListPage } from './features/expenses/pages/ExpenseListPage';
 import styles from './App.module.scss';
 
