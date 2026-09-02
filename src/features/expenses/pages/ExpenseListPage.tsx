@@ -6,28 +6,29 @@ import { ExpenseList } from '../components/ExpenseList';
 import { usePagination } from '../../../hooks/usePagination';
 import { SortField } from '../../../types/paginatedApi.types';
 import { useListControls } from '../../../hooks/useListControls';
+import { useAppSelector } from '../../../app/hooks';
+import { queueDelete } from '../services/syncManager';
 
 const PAGE_SIZE = 4;
 
 export const ExpenseListPage = () => {
     const [deleteExpense] = useDeleteExpenseMutation();
+    const isOnline = useAppSelector((state) => state.offline.isOnline);
     const [category, setCategory] = useState<ExpenseCategory>();
     const { sortBy, sortOrder, page, nextPage, handleSortChange , resetPage} = useListControls<SortField>({initialSortBy: 'date'});
-    const { currentData, isLoading, isFetching } = useGetExpensesQuery(
-        {
-            page,
-            limit: PAGE_SIZE,
-            category,
-            sortBy,
-            sortOrder,
-        }
-    );
+    const queryArgs = {
+        page,
+        limit: PAGE_SIZE,
+        category,
+        sortBy,
+        sortOrder,
+    };
+    const { currentData, isLoading, isFetching } = useGetExpensesQuery(queryArgs);
     const { hasMore, items, resetPagination } = usePagination<Expense>({
         data: currentData,
         isFetching,
         page,
     });
-    
 
     const handleCategoryChange = (
         value?: ExpenseCategory,
@@ -38,7 +39,15 @@ export const ExpenseListPage = () => {
     };
 
     const handleDelete = async (id: string) => {
-        await deleteExpense(id);
+        if (isOnline) {
+            try {
+                await deleteExpense(id).unwrap();
+            } catch {
+                queueDelete(id, queryArgs);
+            }
+        } else {
+            queueDelete(id, queryArgs);
+        }
         resetPage();
         resetPagination();
     };

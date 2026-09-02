@@ -33,8 +33,8 @@ export const expensesApi = createApi({
         }),
 
         updateExpense: builder.mutation<Expense, UpdateExpenseRequest>({
-            query: (id, ...body) => ({
-                url: `expenses/${id}`,
+            query: ({ id, ...body }) => ({
+                url: `/expenses/${id}`,
                 method: 'PATCH',
                 body
             }),

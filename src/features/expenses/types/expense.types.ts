@@ -24,3 +24,12 @@ export type Expense = {
 export type CreateExpenseRequest = Omit<Expense, "id" | "createdAt" |"updatedAt">;
 
 export type UpdateExpenseRequest = {id : string} & Partial<Omit<Expense, "id" | "createdAt" |"updatedAt">>;
+
+export type SyncOperation = {
+  id: string;
+  type: 'delete';
+  expenseId: string;
+  createdAt: string;
+};
+
+export type SyncStatus = 'idle' | 'syncing' | 'failed';
