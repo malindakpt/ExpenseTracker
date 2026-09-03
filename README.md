@@ -1,75 +1,43 @@
-# React + TypeScript + Vite
+# Expense Tracker
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React and TypeScript expense-tracking application. It lets users record expenses and browse a filterable, sortable history backed by an in-browser mocked API.
 
-Currently, two official plugins are available:
+## Run locally
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Prerequisites: Node.js 20 or later and npm.
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+Open the local URL printed by Vite. In development, Mock Service Worker (MSW) intercepts `/api/expenses` requests and supplies seeded in-memory expense data.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Other available commands:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+npm run build
+npm run lint
 ```
+
+## Implemented well
+
+- **Add expenses:** The form collects a title, positive amount, date, category, and optional notes. Client-side Zod validation reports field-level errors, while failed submissions show an accessible error message.
+- **Expense history:** The list shows title, category, date, amount, and optional notes. Users can delete an expense from the list.
+- **Pagination:** A Load More control retrieves pages incrementally and accumulates prior results without duplicate IDs.
+- **Filtering and sorting:** The history can be filtered by category and sorted by date or amount in ascending or descending order. Changing a filter or sort resets the loaded results.
+- **Mocked CRUD API:** MSW provides `GET`, `POST`, `PATCH`, and `DELETE` handlers for `/api/expenses`. RTK Query manages request lifecycle state, caching, and list invalidation for the active add/delete flows.
+- **Code organization:** Expense-specific API, components, page, types, and validation are grouped under `src/features/expenses`. Shared form controls, Redux store setup, and pagination/list-control hooks live in dedicated modules.
+- **Responsive and accessible basics:** Form and list styles include mobile and desktop layouts. Inputs use labels, loading/error messages use appropriate live-region roles, and destructive actions have descriptive labels.
+
+## Current scope and gaps
+
+This submission prioritizes the usable create, browse, filter/sort, paginate, and delete flow within the assignment window.
+
+- **Editing is not complete:** The mock server supports `PATCH`, and an RTK Query update endpoint is declared, but there is no edit UI or edit form. The current client update query wiring also needs correction before it can be used.
+- **Offline mode is not connected:** A reusable `StorageManager` wrapper around `localStorage` exists, but expenses and pending mutations are not persisted. There is no online/offline indicator or queued synchronization when connectivity returns.
+- **Retry handling is not implemented:** Failed requests are surfaced to the user for create operations, but automatic retry/backoff and a retry action are not yet provided.
+- **Mock API only in development:** MSW starts only during `npm run dev`. A production deployment would need a real API base URL and server implementation.
+- **Tests are not yet included:** The project does not currently contain unit or integration tests for reducers, API behavior, form validation, or pagination.
+- **Pagination uses a Load More button:** This satisfies the preferred interaction alternative in the brief; infinite scroll has not been added.
+
